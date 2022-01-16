@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/wikiDB",{userNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/wikiDB",{useNewUrlParser: true});
 
 const articleSchema = {
     title: String,
@@ -23,7 +23,11 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
-//TODO
+app.get("/articles", (req, res) =>{
+Article.find(function(err, foundArticles){
+    res.send(foundArticles);
+})
+})
 
 app.listen(3000, function() {
   console.log("http://localhost:3000");
