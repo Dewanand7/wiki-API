@@ -28,8 +28,11 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema); // create our article model
 
+/////////////////////request all articles/////////////////////////// 
+
 
 // sabko chain main implement kiya route handlers with app.route: ke liya
+
 app.route("/articles")
 
 //(.)ka matlab hota hai chain method express ka docs dk lo. better understanding
@@ -75,6 +78,27 @@ app.route("/articles")
     }
   });
 })
+
+/////////////////////////Requests Targetting a specific Articls///////////////////
+
+app.route("/articles/:articleTitle")
+
+// req.params.articleTitle = "Moon"
+
+.get(function(req, res){
+
+  Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
+    if(foundArticle){
+      res.send(foundArticle);
+    }else{
+      res.send("Nai Mil Raha hai bhai same Title.");
+
+    }
+  });
+
+});
+
+
 
 app.listen(3000, function () {
   console.log("http://localhost:3000");
