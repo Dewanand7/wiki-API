@@ -30,7 +30,12 @@ const Article = mongoose.model("Article", articleSchema); // create our article 
 
 
 // sabko chain main implement kiya route handlers with app.route: ke liya
-app.route("/articles").get( function (req, res) {
+app.route("/articles")
+
+//(.)ka matlab hota hai chain method express ka docs dk lo. better understanding
+//GET method ke liye 
+
+.get( function (req, res) {
   Article.find(function (err, foundArticles) {
     if (!err) {
       res.send(foundArticles);
@@ -38,7 +43,10 @@ app.route("/articles").get( function (req, res) {
       res.send(err);
     }
   });
-}).post( function (req, res) {
+})
+
+//POST METHOD KE LIYE
+.post( function (req, res) {
   // our post request targets the /articles route
 
   const newArticle = new Article({
@@ -54,7 +62,10 @@ app.route("/articles").get( function (req, res) {
       res.send(err);
     }
   });
-}).delete( function (req, res) {
+})
+
+//DELETE method k liye 
+.delete( function (req, res) {
   Article.deleteMany(function (err) {
     if (!err) {
       res.send("Successfully deleted all article.");
@@ -63,18 +74,7 @@ app.route("/articles").get( function (req, res) {
       res.send(err);
     }
   });
-});
- 
-
-//GET Method k lye please check also postman ki GET hai ki nai
-app.get("/articles",);
-
-//POST method k lye database main sb save ho jye ga
-app.post("/articles",);
-
-
-//delete karne k lye DELETE method
-app.delete("/articles",);
+})
 
 app.listen(3000, function () {
   console.log("http://localhost:3000");
