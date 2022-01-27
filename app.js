@@ -1,9 +1,9 @@
-//jshint esversion:6
+//jshint esversion:6.1
 
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require("express"); //express k lye
+const bodyParser = require("body-parser"); //body ke lye
 const ejs = require("ejs");
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //mongo database k lye
 const req = require("express/lib/request");
 
 const app = express();
@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
+//mongoose connect k lye
 mongoose.connect("mongodb://localhost:27017/wikiDB", {
   useNewUrlParser: true
 });
@@ -29,8 +30,8 @@ const Article = mongoose.model("Article", articleSchema); // create our article 
 
 // implement chainable route handlers with app.route:
 
-
-app.get("/articles", function(req, res){
+//GET Method k lye please check also postman ki GET hai ki nai
+app.get("/articles", function (req, res) {
   Article.find(function (err, foundArticles) {
     if (!err) {
       res.send(foundArticles);
@@ -40,6 +41,7 @@ app.get("/articles", function(req, res){
   });
 });
 
+//POST method k lye database main sb save ho jye ga
 app.post("/articles", function (req, res) {
   // our post request targets the /articles route
 
@@ -49,8 +51,8 @@ app.post("/articles", function (req, res) {
     content: req.body.content
   });
 
-  newArticle.save(function(err){
-    if (!err){
+  newArticle.save(function (err) {
+    if (!err) {
       res.send("Successfully added a new article.");
     } else {
       res.send(err);
@@ -58,15 +60,17 @@ app.post("/articles", function (req, res) {
   });
 });
 
-app.delete("/articles", function(req,res){
-Article.deleteMany(function(err){
-  if(!err){
-    res.send("Successfully deleted all article.");
 
-  }else{
-    res.send(err);
-  }
-});
+//delete karne k lye DELETE method
+app.delete("/articles", function (req, res) {
+  Article.deleteMany(function (err) {
+    if (!err) {
+      res.send("Successfully deleted all article.");
+
+    } else {
+      res.send(err);
+    }
+  });
 });
 
 app.listen(3000, function () {
