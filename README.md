@@ -1,1 +1,1 @@
-# wiki-API
+# wikiDB-API
